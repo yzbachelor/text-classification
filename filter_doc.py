@@ -85,7 +85,7 @@ def sampling(X,Y):
             sample_y.append(Y[i])
             count+=1
             Y_label[i]=1
-    print count
+    #print count
     num=0
     while num<count*3:
         index=random.randint(0,len(Y)-1)
@@ -167,7 +167,7 @@ def split_doc(argv):
     X_test=np.array(X)
     #svm模型预测和结果保存
     Y_predict=clf.predict(X_test)
-    f=open('result.txt','w')
+    result=[]
     path1='./trueFile/'
     if not os.path.exists(path1):
         os.mkdir(path1)
@@ -183,7 +183,9 @@ def split_doc(argv):
             f1=open(path1+filename,'w')
             f1.write(context)
             f1.close()
-        f.write(str(rdarray[0][i])+','+str(Y_predict[i])+'\n')
+	    result.append(str(rdarray[0][i])+','+str(Y_predict[i]))
+    f=open('result.txt','w')
+    f.write('\n'.join(result))
     f.close()
     logging.debug('result comes out!')
         
@@ -193,7 +195,7 @@ def main():
     SplitW()
     train('./train_segfile2/')
     split_doc('./test_segfile2/')
-    #updataSql()
+    updataSql()
     
   
 if __name__=='__main__':
